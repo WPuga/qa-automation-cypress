@@ -1,0 +1,31 @@
+{
+  "name": "cypress-cucumber-challenge",
+  "version": "1.0.0",
+  "description": "Desafio de automação com Cypress e Cucumber",
+  "main": "index.js",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test": "npm run cypress:run"
+  },
+  "keywords": [
+    "cypress",
+    "cucumber",
+    "gherkin",
+    "automation",
+    "test"
+  ],
+  "author": "Wesley Puga",
+  "license": "ISC",
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^20.0.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
+    "cypress": "^13.6.0",
+    "esbuild": "^0.19.11"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": [
+      "cypress/support/step_definitions/**/*.{js,ts}"
+    ]
+  }
+}
