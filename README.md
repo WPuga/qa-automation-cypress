@@ -67,5 +67,13 @@ Após a execução da pipeline no GitHub, você pode acessar a aba **Actions**, 
 
 Isso garante que tenhamos provas da execução e facilita muito o debug em caso de erros no ambiente de integração.
 
+## 🛡️ Segurança e Boas Práticas
+
+Para garantir a segurança das informações e a robustez do projeto, foram implementadas as seguintes práticas:
+
+- **Mascaramento de Dados Sensíveis**: Nos testes de API, foi criado um utilitário que detecta automaticamente campos sensíveis (como `password`, `token`, `key`, `auth`, etc.) nos logs do Cypress e os substitui por `********`. Isso evita que segredos sejam expostos em vídeos de execução ou logs do CI/CD.
+- **Dados Dinâmicos**: Uso de geradores de dados aleatórios para cada execução, evitando dependência de contas fixas e garantindo a idempotência dos testes.
+- **Auditoria de Dependências**: O projeto passa por auditorias regulares (`npm audit`) para garantir que as bibliotecas utilizadas estejam livres de vulnerabilidades conhecidas.
+
 ---
 Feito com foco em qualidade e organização.
