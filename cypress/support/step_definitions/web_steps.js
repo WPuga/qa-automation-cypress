@@ -1,21 +1,21 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 
-// Gera dados únicos para cada execução usando timestamp
-function gerarDadosCadastro() {
-  const timestamp = Date.now();
+// Gera dados dinâmicos para o cadastro
+function gerarDadosUsuario() {
+  const sufixo = Date.now();
   return {
-    nome: `Teste QA`,
-    email: `teste_cypress_${timestamp}@testmail.com`,
-    senha: "Senha@Teste123",
-    firstName: "Teste",
-    lastName: "QA",
-    company: "Empresa Teste",
-    address: "Rua dos Testes, 123",
-    country: "United States",
-    state: "California",
-    city: "Los Angeles",
-    zipcode: "90001",
-    mobile: "11999999999"
+    nomeCompleto: `Gabriel Teste ${sufixo}`,
+    email: `gabriel.automacao.${sufixo}@provedor.com.br`,
+    senha: "SenhaSegura#2024",
+    primeiroNome: "Gabriel",
+    sobrenome: "Alves",
+    empresa: "QA Solutions BR",
+    endereco: "Avenida Paulista, 1000 - Bela Vista",
+    pais: "United States", // Site suporta apenas países específicos (EUA, Canadá, etc.)
+    estado: "São Paulo (Simulado)", 
+    cidade: "São Paulo",
+    cep: "01310-100",
+    celular: "11988887777"
   };
 }
 
@@ -28,29 +28,30 @@ When("eu acesso a página de login", () => {
 });
 
 When("realizo um novo cadastro no site", () => {
-  const dados = gerarDadosCadastro();
+  const usuario = gerarDadosUsuario();
 
-  // Preenche o formulário inicial de signup
-  cy.get('[data-qa="signup-name"]').type(dados.nome);
-  cy.get('[data-qa="signup-email"]').type(dados.email);
+  // Preenche o formulário de Cadastro Inicial
+  cy.get('[data-qa="signup-name"]').type(usuario.nomeCompleto);
+  cy.get('[data-qa="signup-email"]').type(usuario.email);
   cy.get('[data-qa="signup-button"]').click();
 
-  // Preenche o formulário completo de registro
+  // Preenche os Detalhes da Conta
   cy.get("#id_gender1").check();
-  cy.get('[data-qa="password"]').type(dados.senha);
-  cy.get('[data-qa="days"]').select("15");
-  cy.get('[data-qa="months"]').select("June");
-  cy.get('[data-qa="years"]').select("1990");
+  cy.get('[data-qa="password"]').type(usuario.senha);
+  cy.get('[data-qa="days"]').select("10");
+  cy.get('[data-qa="months"]').select("March");
+  cy.get('[data-qa="years"]').select("1995");
 
-  cy.get('[data-qa="first_name"]').type(dados.firstName);
-  cy.get('[data-qa="last_name"]').type(dados.lastName);
-  cy.get('[data-qa="company"]').type(dados.company);
-  cy.get('[data-qa="address"]').type(dados.address);
-  cy.get('[data-qa="country"]').select(dados.country);
-  cy.get('[data-qa="state"]').type(dados.state);
-  cy.get('[data-qa="city"]').type(dados.city);
-  cy.get('[data-qa="zipcode"]').type(dados.zipcode);
-  cy.get('[data-qa="mobile_number"]').type(dados.mobile);
+  // Preenche Informações de Endereço
+  cy.get('[data-qa="first_name"]').type(usuario.primeiroNome);
+  cy.get('[data-qa="last_name"]').type(usuario.sobrenome);
+  cy.get('[data-qa="company"]').type(usuario.empresa);
+  cy.get('[data-qa="address"]').type(usuario.endereco);
+  cy.get('[data-qa="country"]').select(usuario.pais);
+  cy.get('[data-qa="state"]').type(usuario.estado);
+  cy.get('[data-qa="city"]').type(usuario.cidade);
+  cy.get('[data-qa="zipcode"]').type(usuario.cep);
+  cy.get('[data-qa="mobile_number"]').type(usuario.celular);
 
   cy.get('[data-qa="create-account"]').click();
 });

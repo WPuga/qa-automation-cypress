@@ -49,7 +49,7 @@ O alvo foi o site [Automation Exercise](https://www.automationexercise.com). Os 
 - Pesquisa de produtos.
 - Adição de itens ao carrinho e conferência no checkout.
 
-*Obs: Se o login `rennierwesley@gmail.com` der algum erro de credenciais, pode ser que o site tenha limpado a base de dados. Se isso acontecer, é só criar um novo usuário rapidinho no site e atualizar o arquivo `.feature`.*
+*Dica: Os testes foram configurados para gerar dados aleatórios a cada execução, então você não precisa se preocupar com conflitos de usuários já cadastrados.*
 
 ### Testes de API
 Fiz a validação de um endpoint do Trello (`https://api.trello.com/1/actions/592f11060f95a3d3d46a987a`):

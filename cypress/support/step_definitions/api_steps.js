@@ -20,69 +20,69 @@ Then("o status code da resposta deve ser {int}", (statusCode) => {
   expect(apiResponse.status).to.eq(statusCode);
 });
 
-// ─── CAMPO EXISTE ─────────────────────────────────────────────────────────────
+// ─── VERIFICAÇÃO DE CAMPO ───────────────────────────────────────────────────
 
 Then(
   "o campo {string} da estrutura {string} deve ser exibido",
-  (fieldName, structureName) => {
-    const content = apiResponse.body?.data?.[structureName]?.[fieldName];
-    cy.log(`[API] ${structureName}.${fieldName} = ${content}`);
-    expect(content, `Campo "${fieldName}" não encontrado em "${structureName}"`).to.not.be.undefined;
+  (nomeDoCampo, nomeDaEstrutura) => {
+    const valor = apiResponse.body?.data?.[nomeDaEstrutura]?.[nomeDoCampo];
+    cy.log(`[API] Verificando se ${nomeDaEstrutura}.${nomeDoCampo} existe. Valor encontrado: ${valor}`);
+    expect(valor, `O campo "${nomeDoCampo}" não foi encontrado dentro de "${nomeDaEstrutura}"`).to.not.be.undefined;
   }
 );
 
-// ─── TIPO DO CAMPO ────────────────────────────────────────────────────────────
+// ─── VALIDAÇÃO DE TIPO ────────────────────────────────────────────────────────
 
 Then(
   "o campo {string} da estrutura {string} deve ser do tipo {string}",
-  (fieldName, structureName, expectedType) => {
-    const content = apiResponse.body?.data?.[structureName]?.[fieldName];
-    const actualType = typeof content;
-    cy.log(`[API] Tipo de ${structureName}.${fieldName}: ${actualType}`);
-    expect(actualType).to.eq(
-      expectedType,
-      `Esperado tipo "${expectedType}", mas encontrado "${actualType}"`
+  (nomeDoCampo, nomeDaEstrutura, tipoEsperado) => {
+    const valor = apiResponse.body?.data?.[nomeDaEstrutura]?.[nomeDoCampo];
+    const tipoAtual = typeof valor;
+    cy.log(`[API] Validando tipo de ${nomeDaEstrutura}.${nomeDoCampo}: ${tipoAtual}`);
+    expect(tipoAtual).to.eq(
+      tipoEsperado,
+      `Esperava que o campo fosse "${tipoEsperado}", mas recebi "${tipoAtual}"`
     );
   }
 );
 
-// ─── CAMPO NÃO VAZIO ─────────────────────────────────────────────────────────
+// ─── VALIDAÇÃO DE CONTEÚDO ───────────────────────────────────────────────────
 
 Then(
   "o campo {string} da estrutura {string} não deve estar vazio",
-  (fieldName, structureName) => {
-    const content = apiResponse.body?.data?.[structureName]?.[fieldName];
-    cy.log(`[API] Valor de ${structureName}.${fieldName}: "${content}"`);
-    expect(content).to.not.be.empty;
+  (nomeDoCampo, nomeDaEstrutura) => {
+    const valor = apiResponse.body?.data?.[nomeDaEstrutura]?.[nomeDoCampo];
+    cy.log(`[API] Validando se ${nomeDaEstrutura}.${nomeDoCampo} tem conteúdo: "${valor}"`);
+    expect(valor).to.not.be.empty;
   }
 );
 
-// ─── CAMPOS OBRIGATÓRIOS NA RAIZ ─────────────────────────────────────────────
+// ─── CAMPOS OBRIGATÓRIOS ─────────────────────────────────────────────────────
 
 Then(
   "a resposta deve conter os campos obrigatórios {string}",
-  (camposString) => {
-    const campos = camposString.split(",").map((c) => c.trim());
+  (listaDeCampos) => {
+    const campos = listaDeCampos.split(",").map((c) => c.trim());
     campos.forEach((campo) => {
       expect(
         apiResponse.body,
-        `Campo obrigatório "${campo}" ausente na resposta`
+        `A resposta da API deveria conter o campo "${campo}", mas ele está ausente.`
       ).to.have.property(campo);
-      cy.log(`[API] Campo obrigatório encontrado: ${campo}`);
+      cy.log(`[API] Campo obrigatório confirmado: ${campo}`);
     });
   }
 );
 
-// ─── TEMPO DE RESPOSTA ────────────────────────────────────────────────────────
+// ─── PERFORMANCE ─────────────────────────────────────────────────────────────
 
 Then(
   "o tempo de resposta deve ser menor que {int} milissegundos",
-  (limitMs) => {
-    const duration = apiResponse.duration;
-    cy.log(`[API] Tempo de resposta: ${duration}ms (limite: ${limitMs}ms)`);
-    expect(duration).to.be.lessThan(
-      limitMs,
-      `Tempo de resposta ${duration}ms excedeu o limite de ${limitMs}ms`
+  (tempoLimite) => {
+    const duracao = apiResponse.duration;
+    cy.log(`[API] Performance: ${duracao}ms (Limite: ${tempoLimite}ms)`);
+    expect(duracao).to.be.lessThan(
+      tempoLimite,
+      `A API demorou ${duracao}ms para responder, o que ultrapassa o limite de ${tempoLimite}ms`
     );
   }
 );
