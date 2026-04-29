@@ -56,6 +56,16 @@ Fiz a validação de um endpoint do Trello (`https://api.trello.com/1/actions/59
 - Verificação do Status Code (200 OK).
 - Validação se o campo `name` está presente dentro do objeto `list` no JSON de retorno.
 
+## 🤖 CI/CD e Evidências
+
+Este projeto conta com uma pipeline de CI/CD via **GitHub Actions**. Toda vez que você fizer um `push` ou abrir um `pull request` para a branch principal, os testes serão executados automaticamente em um ambiente Linux.
+
+### Onde encontrar as evidências?
+Após a execução da pipeline no GitHub, você pode acessar a aba **Actions**, clicar na execução desejada e, no final da página, encontrará os **Artifacts**:
+- **cypress-videos**: Gravação completa de todos os testes executados.
+- **cypress-screenshots**: Prints tirados automaticamente caso algum teste falhe.
+
+Isso garante que tenhamos provas da execução e facilita muito o debug em caso de erros no ambiente de integração.
+
 ---
 Feito com foco em qualidade e organização.
-

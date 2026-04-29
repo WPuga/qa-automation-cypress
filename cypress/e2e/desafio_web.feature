@@ -2,15 +2,17 @@
 
 Funcionalidade: Fluxos de E-commerce
   Para garantir que os usuários consigam comprar sem problemas
-  Eu, como analista de QA, quero validar o login, busca e carrinho no site Automation Exercise
+  Eu, como analista de QA, quero validar o cadastro, busca e carrinho no site Automation Exercise
 
   Contexto:
     Dado que eu acesso a página principal
 
-  Cenário: Realizar Login com sucesso
+  Cenário: Realizar cadastro e login com sucesso
     Quando eu acesso a página de login
-    E realizo o login com o usuário "rennierwesley@gmail.com" e senha "Biel@123"
-    Então eu devo ver a mensagem de login realizado com sucesso
+    E realizo um novo cadastro no site
+    Então eu devo ver a mensagem de conta criada com sucesso
+    E eu devo ver a mensagem de login realizado com sucesso
+    E eu excluo a conta criada para limpeza
 
   Cenário: Buscar um produto
     Quando eu busco pelo produto "Top"

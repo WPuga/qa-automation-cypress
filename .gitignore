@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+
+# Testing
+coverage/
+.nyc_output/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs and databases
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+sqlite.db
+
+# Environment variables
+.env
+.env.local
+
+# Reports
+cypress/results/
+cypress/reports/
+
+# OS
+.DS_Store
+Thumbs.db
