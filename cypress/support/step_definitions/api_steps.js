@@ -2,6 +2,19 @@ import { When, Then } from "@badeball/cypress-cucumber-preprocessor";
 
 let apiResponse;
 
+// ─── UTILS ──────────────────────────────────────────────────────────────────
+
+/**
+ * Mascara valores de campos sensíveis para evitar exposição em logs/relatórios.
+ */
+function safeLogValue(nomeDoCampo, valor) {
+  const camposSensiveis = ["password", "token", "key", "auth", "senha", "secret"];
+  const isSensivel = camposSensiveis.some((termo) =>
+    nomeDoCampo.toLowerCase().includes(termo)
+  );
+  return isSensivel ? "********" : valor;
+}
+
 // ─── REQUEST ────────────────────────────────────────────────────────────────
 
 When("eu envio um GET para {string}", (url) => {
@@ -26,7 +39,9 @@ Then(
   "o campo {string} da estrutura {string} deve ser exibido",
   (nomeDoCampo, nomeDaEstrutura) => {
     const valor = apiResponse.body?.data?.[nomeDaEstrutura]?.[nomeDoCampo];
-    cy.log(`[API] Verificando se ${nomeDaEstrutura}.${nomeDoCampo} existe. Valor encontrado: ${valor}`);
+    const valorSeguro = safeLogValue(nomeDoCampo, valor);
+    
+    cy.log(`[API] Verificando se ${nomeDaEstrutura}.${nomeDoCampo} existe. Valor: ${valorSeguro}`);
     expect(valor, `O campo "${nomeDoCampo}" não foi encontrado dentro de "${nomeDaEstrutura}"`).to.not.be.undefined;
   }
 );
@@ -38,6 +53,7 @@ Then(
   (nomeDoCampo, nomeDaEstrutura, tipoEsperado) => {
     const valor = apiResponse.body?.data?.[nomeDaEstrutura]?.[nomeDoCampo];
     const tipoAtual = typeof valor;
+    
     cy.log(`[API] Validando tipo de ${nomeDaEstrutura}.${nomeDoCampo}: ${tipoAtual}`);
     expect(tipoAtual).to.eq(
       tipoEsperado,
@@ -52,7 +68,9 @@ Then(
   "o campo {string} da estrutura {string} não deve estar vazio",
   (nomeDoCampo, nomeDaEstrutura) => {
     const valor = apiResponse.body?.data?.[nomeDaEstrutura]?.[nomeDoCampo];
-    cy.log(`[API] Validando se ${nomeDaEstrutura}.${nomeDoCampo} tem conteúdo: "${valor}"`);
+    const valorSeguro = safeLogValue(nomeDoCampo, valor);
+
+    cy.log(`[API] Validando se ${nomeDaEstrutura}.${nomeDoCampo} tem conteúdo: "${valorSeguro}"`);
     expect(valor).to.not.be.empty;
   }
 );
@@ -64,11 +82,15 @@ Then(
   (listaDeCampos) => {
     const campos = listaDeCampos.split(",").map((c) => c.trim());
     campos.forEach((campo) => {
+      const valor = apiResponse.body[campo];
+      const valorSeguro = safeLogValue(campo, valor);
+
       expect(
         apiResponse.body,
         `A resposta da API deveria conter o campo "${campo}", mas ele está ausente.`
       ).to.have.property(campo);
-      cy.log(`[API] Campo obrigatório confirmado: ${campo}`);
+      
+      cy.log(`[API] Campo obrigatório confirmado: ${campo} (Valor: ${valorSeguro})`);
     });
   }
 );
@@ -86,3 +108,4 @@ Then(
     );
   }
 );
+
