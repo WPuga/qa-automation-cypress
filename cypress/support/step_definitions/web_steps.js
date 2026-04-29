@@ -4,14 +4,14 @@ import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 function gerarDadosUsuario() {
   const sufixo = Date.now();
   return {
-    nomeCompleto: `Gabriel Teste ${sufixo}`,
-    email: `gabriel.automacao.${sufixo}@provedor.com.br`,
+    nomeCompleto: `qatest Teste ${sufixo}`,
+    email: `qatest.automacao.${sufixo}@provedor.com.br`,
     senha: "SenhaSegura#2024",
-    primeiroNome: "Gabriel",
-    sobrenome: "Alves",
+    primeiroNome: "qatest",
+    sobrenome: "testtes",
     empresa: "QA Solutions BR",
     endereco: "Avenida Paulista, 1000 - Bela Vista",
-    pais: "United States", // Site suporta apenas países específicos (EUA, Canadá, etc.)
+    pais: "United States",
     estado: "São Paulo (Simulado)", 
     cidade: "São Paulo",
     cep: "01310-100",
